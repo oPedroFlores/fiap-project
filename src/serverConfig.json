@@ -1,0 +1,19 @@
+{
+  "port": 8080,
+  "database": {
+    "dataBaseSchema": "fiap",
+    "username": "root",
+    "password": "root",
+    "options": {
+      "dialectOptions": {
+        "dateStrings": true,
+        "typeCast": true
+      },
+      "timezone": "-03:00",
+      "dialect": "mysql",
+      "host": "localhost",
+      "logging": false
+    }
+  },
+  "jwtSalt": "fiap-salt"
+}

@@ -1,0 +1,145 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API de Posts",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/posts/{id}": {
+        "get": {
+          "summary": "Obter um post por ID",
+          "description": "Retorna um post específico com base no ID fornecido.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID do post a ser recuperado"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Post encontrado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Post"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Post não encontrado"
+            }
+          }
+        },
+        "put": {
+          "summary": "Atualizar um post",
+          "description": "Atualiza um post existente com base no ID fornecido.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID do post a ser atualizado"
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Post atualizado com sucesso"
+            },
+            "404": {
+              "description": "Post não encontrado"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Excluir um post",
+          "description": "Exclui um post específico com base no ID fornecido.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID do post a ser excluído"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Post excluído com sucesso"
+            },
+            "404": {
+              "description": "Post não encontrado"
+            }
+          }
+        }
+      },
+      "/posts": {
+        "post": {
+          "summary": "Criar um novo post",
+          "description": "Cria um novo post.",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Post criado com sucesso",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Post"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Post": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64",
+              "description": "ID do post"
+            },
+            "title": {
+              "type": "string",
+              "description": "Título do post"
+            },
+            "content": {
+              "type": "string",
+              "description": "Conteúdo do post"
+            }
+          }
+        }
+      }
+    }
+  }

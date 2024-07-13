@@ -4,8 +4,10 @@
       "title": "API de Posts",
       "version": "1.0.0"
     },
+    "basePath": "/",
     "paths": {
       "/posts/{id}": {
+        "tags":["Posts"],
         "get": {
           "summary": "Obter um post por ID",
           "description": "Retorna um post específico com base no ID fornecido.",
@@ -37,6 +39,7 @@
           }
         },
         "put": {
+          "tags":["Posts"],
           "summary": "Atualizar um post",
           "description": "Atualiza um post existente com base no ID fornecido.",
           "parameters": [
@@ -69,6 +72,7 @@
           }
         },
         "delete": {
+          "tags":["Posts"],
           "summary": "Excluir um post",
           "description": "Exclui um post específico com base no ID fornecido.",
           "parameters": [
@@ -94,12 +98,14 @@
       },
       "/posts": {
         "post": {
+          "tags":["Posts"],
           "summary": "Criar um novo post",
           "description": "Cria um novo post.",
           "requestBody": {
             "content": {
               "application/json": {
                 "schema": {
+                  "type": "object",
                   "$ref": "#/components/schemas/Post"
                 }
               }
@@ -134,9 +140,13 @@
               "type": "string",
               "description": "Título do post"
             },
-            "content": {
+            "body": {
               "type": "string",
               "description": "Conteúdo do post"
+            },
+            "active": {
+              "type": "boolean",
+              "description": "Status do post"
             }
           }
         }

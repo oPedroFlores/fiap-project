@@ -7,7 +7,7 @@ FROM node:18-alpine
 
 # Crie o diretório de trabalho no contêiner
 
-WORKDIR /usr/app
+WORKDIR /app
 
   
 
@@ -37,7 +37,7 @@ RUN npm install -g pnpm
 
 # Compilação do código TypeScript
 
-RUN npm build
+# RUN npm run build - Obs: descomentar, se necessário!!!
 
   
 

@@ -25,13 +25,14 @@ COPY . .
 RUN apk add --no-cache mysql-client
 
 # setar as variáveis
-ENV MYSQL_HOST=localhost:3306
-ENV MYSQL_USER=root
-ENV MYSQL_PASSWORD=root
-ENV MYSQL_DATABASE=fiap
+# ENV MYSQL_HOST=localhost:3306
+# ENV MYSQL_USER=root
+# ENV MYSQL_PASSWORD=root
+# ENV MYSQL_DATABASE=fiap
   
 
-RUN npm install -g pnpm
+# RUN npm install -g pnpm (não aplicável)
+RUN npm start
 
   
 

@@ -32,7 +32,8 @@ RUN apk add --no-cache mysql-client
   
 
 # RUN npm install -g pnpm (não aplicável)
-RUN npm start
+
+# RUN npm run start (se existir quebra o build)
 
   
 

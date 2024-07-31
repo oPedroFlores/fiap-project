@@ -3,7 +3,7 @@
   "database": {
     "dataBaseSchema": "fiap",
     "username": "root",
-    "password": "root",
+    "password": "123456",
     "options": {
       "dialectOptions": {
         "dateStrings": true,
@@ -11,7 +11,7 @@
       },
       "timezone": "-03:00",
       "dialect": "mysql",
-      "host": "localhost",
+      "host": "database",
       "logging": false
     }
   },

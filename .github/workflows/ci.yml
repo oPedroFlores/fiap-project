@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - test-add-unit-tests
+      - docker-in-development
       - main
   pull_request:
     branches:

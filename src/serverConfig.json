@@ -3,7 +3,7 @@
   "database": {
     "dataBaseSchema": "fiap",
     "username": "root",
-    "password": "123456",
+    "password": "root",
     "options": {
       "dialectOptions": {
         "dateStrings": true,

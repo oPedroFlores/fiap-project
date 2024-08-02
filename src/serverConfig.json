@@ -11,7 +11,7 @@
       },
       "timezone": "-03:00",
       "dialect": "mysql",
-      "host": "localhost",
+      "host": "database",
       "logging": false
     }
   },

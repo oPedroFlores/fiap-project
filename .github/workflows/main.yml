@@ -22,5 +22,5 @@ jobs:
         run: |
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker build -t $DOCKER_USERNAME/fiap-project:latest --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} .
-          docker push $DOCKER_USERNAME/petech-stock:latest
+          docker push $DOCKER_USERNAME/fiap-project:latest
  

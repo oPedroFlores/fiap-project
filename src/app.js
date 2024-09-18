@@ -1,15 +1,25 @@
-const express = require("express");
-const cors = require("cors");
-const routes = require("./Routers/postsRouters");
+const express = require('express');
+const cors = require('cors');
+const postRoutes = require('./Routers/postsRouters');
+const userRoutes = require('./Routers/userRouters');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const sequelize = require('../db');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(routes);
+app.use(postRoutes);
+app.use(userRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+sequelize
+  .sync()
+  .then(() => {
+    console.log('Server connected to database!');
+  })
+  .catch((err) => {
+    console.log('Error connecting to database: ', err);
+  });
+
 module.exports = app;
-
-

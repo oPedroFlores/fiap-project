@@ -119,3 +119,34 @@ module.exports.changeUserRole = async (req, res) => {
     });
   }
 };
+
+module.exports.autoLogin = async (req, res) => {
+  try {
+    const { email } = req.user;
+    const user = await userModels.findUserByEmail(email);
+
+    const token = jwt.sign(
+      { id: user._id, email: user.email, role: user.role }, // Desestrutura corretamente os campos
+      serverConfig.jwtSalt,
+      { expiresIn: '1h' },
+    );
+    return res.status(200).json({
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+      token,
+      success: true,
+      message: 'Login realizado com sucesso',
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: 'Erro no servidor',
+      success: false,
+      error: error.message,
+    });
+  }
+};

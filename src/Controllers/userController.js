@@ -23,7 +23,7 @@ module.exports.registerUser = async (req, res) => {
 
     //* Criação do token JWT
     const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role },
+      { id: user.id, email: user.email, role: user.role },
       serverConfig.jwtSalt,
       { expiresIn: '1h' },
     );
@@ -62,7 +62,7 @@ module.exports.loginUser = async (req, res) => {
         .json({ message: 'Senha inválida', success: false });
     }
     const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role }, // Desestrutura corretamente os campos
+      { id: user.id, email: user.email, role: user.role }, // Desestrutura corretamente os campos
       serverConfig.jwtSalt,
       { expiresIn: '1h' },
     );
@@ -126,7 +126,7 @@ module.exports.autoLogin = async (req, res) => {
     const user = await userModels.findUserByEmail(email);
 
     const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role }, // Desestrutura corretamente os campos
+      { id: user.id, email: user.email, role: user.role }, // Desestrutura corretamente os campos
       serverConfig.jwtSalt,
       { expiresIn: '1h' },
     );

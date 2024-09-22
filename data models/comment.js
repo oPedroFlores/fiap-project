@@ -1,18 +1,15 @@
-// post.js
+// comment.js
 const Sequelize = require('sequelize');
 const database = require('../db');
 const User = require('./users');
+const Post = require('./post');
 
-const Post = database.define('post', {
+const Comment = database.define('comment', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
-  },
-  title: {
-    type: Sequelize.STRING(100),
-    allowNull: false,
   },
   body: {
     type: Sequelize.TEXT,
@@ -31,12 +28,23 @@ const Post = database.define('post', {
       key: 'id',
     },
   },
+  postId: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: Post,
+      key: 'id',
+    },
+  },
 });
 
-// Definindo a associação
-User.hasMany(Post, { foreignKey: 'userId' });
-Post.belongsTo(User, { foreignKey: 'userId' });
+// Associations
+User.hasMany(Comment, { foreignKey: 'userId' });
+Comment.belongsTo(User, { foreignKey: 'userId' });
 
-Post.sync();
+Post.hasMany(Comment, { foreignKey: 'postId' });
+Comment.belongsTo(Post, { foreignKey: 'postId' });
 
-module.exports = Post;
+Comment.sync();
+
+module.exports = Comment;

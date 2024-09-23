@@ -109,6 +109,16 @@ module.exports.deletePost = async (req, res) => {
       .json({ message: 'Post não encontrado', success: false });
   }
 
+  // Verificar se o post é deste usuário
+  const userId = req.user.id;
+  const postUserId = post.userId;
+  if (postUserId !== userId) {
+    return res.status(403).json({
+      message: 'Este post não pertence a este usuário',
+      success: false,
+    });
+  }
+
   try {
     await postModel.destroy({ where: { id } });
     res

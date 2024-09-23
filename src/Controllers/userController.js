@@ -124,7 +124,6 @@ module.exports.autoLogin = async (req, res) => {
   try {
     const { email } = req.user;
     const user = await userModels.findUserByEmail(email);
-
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role }, // Desestrutura corretamente os campos
       serverConfig.jwtSalt,

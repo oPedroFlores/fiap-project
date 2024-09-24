@@ -33,7 +33,7 @@ module.exports.registerUser = async (req, res) => {
       user: { name: userName, email: userEmail, role },
       token,
       success: true,
-      message: 'Usário criado com sucesso',
+      message: 'Usuário criado com sucesso',
     });
   } catch (error) {
     //* Tratamento de erros
@@ -53,7 +53,7 @@ module.exports.loginUser = async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .json({ message: 'Usário não encontrado', success: false });
+        .json({ message: 'Usuário não encontrado', success: false });
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
@@ -95,7 +95,7 @@ module.exports.changeUserRole = async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .json({ message: 'Usário não encontrado', success: false });
+        .json({ message: 'Usuário não encontrado', success: false });
     }
 
     const updatedUser = await userModels.updateUserRole(id, role.toLowerCase());

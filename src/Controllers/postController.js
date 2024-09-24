@@ -173,7 +173,6 @@ module.exports.updatePost = async (req, res) => {
 
 module.exports.getPostById = async (req, res) => {
   const { id } = req.params;
-
   try {
     const post = await postModel.findByPk(id, {
       include: [
@@ -195,7 +194,7 @@ module.exports.getPostById = async (req, res) => {
 
     const token = authHeader && authHeader.split(' ')[1];
     let userId;
-    if (token) {
+    if (token && token !== 'null' && token.length > 10 && token !== null) {
       const user = await getUserByToken(authHeader);
       userId = user.id;
     }

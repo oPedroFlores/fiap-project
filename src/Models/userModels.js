@@ -1,6 +1,6 @@
-const Users = require('../../data models/users');
-const jwt = require('jsonwebtoken');
-const serverConfig = require('../serverConfig.json');
+const Users = require("../../data models/users");
+const jwt = require("jsonwebtoken");
+const serverConfig = require("../serverConfig.json");
 
 module.exports.isEmailRegistered = async (email) => {
   try {
@@ -55,10 +55,37 @@ module.exports.updateUserRole = async (id, role) => {
 
 module.exports.getUserByToken = async (token) => {
   try {
-    token = token.split(' ')[1];
+    token = token.split(" ")[1];
     const decoded = jwt.verify(token, serverConfig.jwtSalt);
     const user = await Users.findOne({ where: { id: decoded.id } });
     return user;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+module.exports.updateUser = async (id, updatedFields) => {
+  return await Users.update(updatedFields, { where: { id } });
+};
+
+module.exports.getUsersByPage = async (limit, offset, page) => {
+  try {
+    const { count, rows } = await Users.findAndCountAll({
+      limit: Number(limit),
+      offset: offset,
+      order: [["createdAt", "DESC"]],
+      attributes: { exclude: ["password"] },
+    });
+    const totalUsers = Math.ceil(count / limit);
+
+    return {
+      totalItems: count,
+      totalUsers: totalUsers,
+      currentPage: Number(page),
+      limit: Number(limit),
+      users: rows,
+    };
   } catch (error) {
     console.error(error);
     return null;

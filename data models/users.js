@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const database = require('../db');
+const bcrypt = require('bcrypt');
 
 const User = database.define('user', {
   id: {
@@ -15,6 +16,7 @@ const User = database.define('user', {
   email: {
     type: Sequelize.STRING(100),
     allowNull: false,
+    unique: true,
   },
   password: {
     type: Sequelize.STRING(100),
@@ -32,6 +34,32 @@ const User = database.define('user', {
   },
 });
 
-User.sync();
+const initializeAdminUser = async () => {
+  try {
+    await User.sync();
+
+    const adminExists = await User.findOne({
+      where: { email: 'admin@gmail.com' },
+    });
+
+    if (!adminExists) {
+      const hashedPassword = await bcrypt.hash('admin', 10);
+
+      await User.create({
+        name: 'admin',
+        email: 'admin@gmail.com',
+        password: hashedPassword,
+        role: 'admin',
+        active: true,
+      });
+
+      console.log('Admin user created successfully');
+    }
+  } catch (error) {
+    console.error('Error initializing admin user:', error);
+  }
+};
+
+initializeAdminUser();
 
 module.exports = User;

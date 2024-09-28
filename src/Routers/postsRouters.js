@@ -21,7 +21,7 @@ router.get(
 router.post(
   '/posts',
   authMiddleware.authToken,
-  authMiddleware.onlyProfessors,
+  authMiddleware.onlyProfessorsOrAdmins,
   postMiddleware.createPost,
   postController.createPost,
 );
@@ -29,7 +29,7 @@ router.post(
 router.put(
   '/posts/:id',
   authMiddleware.authToken,
-  authMiddleware.onlyProfessors,
+  authMiddleware.onlyProfessorsOrAdmins,
   postMiddleware.updatePost,
   postController.updatePost,
 );
@@ -37,7 +37,7 @@ router.put(
 router.delete(
   '/posts/:id',
   authMiddleware.authToken,
-  authMiddleware.onlyProfessors,
+  authMiddleware.onlyProfessorsOrAdmins,
   postMiddleware.deletePost,
   postController.deletePost,
 );

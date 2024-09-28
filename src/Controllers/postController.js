@@ -83,7 +83,9 @@ module.exports.createPost = async (req, res) => {
   const { title, body, active } = req.body;
   try {
     const post = await postModel.create({ title, body, active, userId });
-    res.status(201).json({ message: 'Post criado com sucesso', post });
+    res
+      .status(201)
+      .json({ message: 'Post criado com sucesso', post, success: true });
   } catch (error) {
     res.status(500).json({
       error: error.message,
@@ -95,6 +97,7 @@ module.exports.createPost = async (req, res) => {
 
 module.exports.deletePost = async (req, res) => {
   const { id } = req.params;
+  const userRole = req.user.role;
   if (!id) {
     return res
       .status(400)
@@ -112,7 +115,7 @@ module.exports.deletePost = async (req, res) => {
   // Verificar se o post é deste usuário
   const userId = req.user.id;
   const postUserId = post.userId;
-  if (postUserId !== userId) {
+  if (postUserId !== userId && userRole !== 'admin') {
     return res.status(403).json({
       message: 'Este post não pertence a este usuário',
       success: false,
@@ -133,6 +136,7 @@ module.exports.updatePost = async (req, res) => {
   const { id } = req.params;
   const { title, body, active } = req.body;
   const userId = req.user.id;
+  const userRole = req.user.role;
   // Construir o objeto de atualização dinamicamente
   const updateData = {};
   if (title !== undefined) updateData.title = title;
@@ -150,7 +154,7 @@ module.exports.updatePost = async (req, res) => {
 
     // Verificar se o post é deste usuário
     const postUserId = post.userId;
-    if (postUserId !== userId) {
+    if (postUserId !== userId && userRole !== 'admin') {
       return res.status(403).json({
         message: 'Este post não pertence a este usuário',
         success: false,
@@ -194,7 +198,13 @@ module.exports.getPostById = async (req, res) => {
 
     const token = authHeader && authHeader.split(' ')[1];
     let userId;
-    if (token && token !== 'null' && token.length > 10 && token !== null) {
+    if (
+      token &&
+      token !== 'null' &&
+      token !== null &&
+      token !== '' &&
+      token !== undefined
+    ) {
       const user = await getUserByToken(authHeader);
       userId = user.id;
     }
@@ -227,6 +237,7 @@ module.exports.getPostById = async (req, res) => {
       post: postWithReactions,
       comments,
       activeReaction: activeReaction,
+      success: true,
     });
   } catch (error) {
     res.status(500).json({
